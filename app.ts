@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import User from './src/modules/user/user.model';
 import authRoutes from './src/modules/auth/auth.routes';
+import { errorHandler } from './src/core/middlewares/error.middleware';
 
 const app = express();
 
@@ -11,25 +11,6 @@ app.use(express.json());
 
 app.use("/auth", authRoutes);
 
-// // Базовий маршрут
-// app.get('/', (req: Request, res: Response) => {
-//   res.send('Finance Tracker API is running');
-// });
-
-// // Тимчасовий тестовий маршрут
-// app.post('/test-user', async (req: Request, res: Response) => {
-//   try {
-//     const user = new User({
-//       email: 'test2@example.com',
-//       password: 'password123',
-//       username: 'Test User',
-//     });
-//     await user.save();
-//     res.status(201).json(user);
-//   } catch (error) {
-//     console.error('Error creating user:', error);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// });
+app.use(errorHandler);
 
 export default app;
